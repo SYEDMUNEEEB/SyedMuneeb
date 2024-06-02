@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import Header from './components/Header';
+import Hero from './components/Hero';
+import Projects from './components/Projects';
+import About from './components/About';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
+import { TailSpin } from 'react-loader-spinner';
 
-function App() {
+
+const App = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); // Simulate a 2-second loading time
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {isLoading ? (
+        <>
+          <Header />
+          <div className="flex justify-center items-center h-screen">
+            <TailSpin
+              color="#4B5563"
+              height={100}
+              width={100}
+            />
+          </div>
+        </>
+      ) : (
+        <>
+          <Header />
+          <main>
+            <Hero />
+            <Projects />
+            <About />
+            <Contact />
+          </main>
+          <Footer />
+        </>
+      )}
     </div>
   );
-}
+};
 
 export default App;
